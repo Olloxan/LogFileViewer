@@ -16,7 +16,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border BorderBrush="LightGray" BorderThickness="1" Margin="5" Padding="10" Width="200">
-                        <StackPanel>
+                        <StackPanel Orientation="Vertical">
                             <TextBlock Text="{Binding FileName}" FontWeight="Bold"/>
                             <TextBlock Text="{Binding FileSize}"/>
                             <TextBlock Text="{Binding LastModified}" Foreground="Gray"/>
