@@ -1,5 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
+using Microsoft.Win32;
+using Microsoft.Xaml.Behaviors.Media;
 
 namespace LogFileViewer
 {
@@ -13,11 +18,11 @@ namespace LogFileViewer
         public string LastModified { get; set; }
     }
 
-    public partial class MainWindow : Window
+    public partial class MainView : Window
     {
         private ObservableCollection<FileItem> fileItems;
 
-        public MainWindow()
+        public MainView()
         {
             InitializeComponent();
             
@@ -45,8 +50,11 @@ namespace LogFileViewer
             });
 
             // Set the ListView's ItemsSource
+            
             filesListView.ItemsSource = fileItems;
         }
+
+       
 
         private void OpenFolder_Click(object sender, RoutedEventArgs e)
         {

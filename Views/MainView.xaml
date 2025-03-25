@@ -1,0 +1,61 @@
+﻿<Window x:Class="LogFileViewer.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LogFileViewer"
+        mc:Ignorable="d"
+        Title="Log File Viewer" Height="800" Width="800">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Open Folder" Click="OpenFolder_Click"/>
+            </MenuItem>
+        </Menu>
+        <ListView x:Name="filesListView" 
+                 SelectionMode="Single" 
+                 Width="200" 
+                 HorizontalAlignment="Left" 
+                 Margin="2"
+                 Background="#F0F0F0">
+            <!--<ListViewItem HorizontalContentAlignment="Stretch">
+                <Border BorderBrush="LightGray" 
+                        BorderThickness="1"                         
+                        Padding="5"                        
+                        HorizontalAlignment="Stretch"
+                        Background="White">
+                    <StackPanel>
+                        <TextBlock Text="example.log" FontWeight="Bold"/>
+                        <TextBlock Text="2.5 MB"/>
+                        <TextBlock Text="2024-03-24 15:30" Foreground="Gray"/>
+                    </StackPanel>
+                </Border>
+            </ListViewItem>-->
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="LightGray" 
+                            BorderThickness="1"                              
+                            Padding="5"                             
+                            HorizontalAlignment="Stretch"
+                            Background="White">
+                        <StackPanel>
+                            <TextBlock Text="{Binding FileName}" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding FileSize}"/>
+                            <TextBlock Text="{Binding LastModified}" Foreground="Gray"/>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+        </ListView>
+    </DockPanel>
+</Window>
