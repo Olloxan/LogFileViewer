@@ -4,70 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LogFileViewer"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         mc:Ignorable="d"      
         WindowStyle="None"
         Background="Transparent"
         AllowsTransparency="True"
         Title="Log File Viewer" Height="700" Width="1300"
         WindowStartupLocation="CenterScreen">
-
-    <Window.Resources>
-        <!-- Colors -->
-        <Color x:Key="winBorderColor1">#462AD8</Color>
-        <Color x:Key="winBorderColor2">#DA34AE</Color>
-        <Color x:Key="winBorderColor3">#8A16C1</Color>
-        <Color x:Key="primaryBackColor1">#060531</Color>
-        <Color x:Key="primaryBackColor2">#1B1448</Color>
-        <Color x:Key="secondaryBackColor1">#1B1448</Color>
-        <Color x:Key="secondaryBackColor2">#060531</Color>
-        
-        <!-- Brushes -->
-        <SolidColorBrush x:Key="titleColor2" Color="#D0D0D0"/>
-        <SolidColorBrush x:Key="titleColor3" Color="#A0A0A0"/>
-
-        <!-- Button Style -->
-        <Style x:Key="menuButton" TargetType="Button">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="{StaticResource titleColor2}"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Width" Value="230"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="Margin" Value="0,0,0,5"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                                BorderThickness="4,0,0,0"
-                                BorderBrush="Transparent"
-                                CornerRadius="5">
-                            <ContentPresenter HorizontalAlignment="Left"
-                                            VerticalAlignment="Center"
-                                            Margin="10,0,0,0"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#1F1F1F"/>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="Button">
-                                <Border Background="{TemplateBinding Background}"
-                                        BorderThickness="4,0,0,0"
-                                        BorderBrush="#DA34AE"
-                                        CornerRadius="5">
-                                    <ContentPresenter HorizontalAlignment="Left"
-                                                    VerticalAlignment="Center"
-                                                    Margin="10,0,0,0"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </Window.Resources>
 
     <Border CornerRadius="10"
             BorderThickness="1">
@@ -132,57 +75,28 @@
                             </Style>
                         </ListBox.ItemContainerStyle>
 
-                        <!-- Sample Button 1 -->
-                        <Button Height="45" Style="{StaticResource menuButton}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0" HorizontalAlignment="Left">
-                                    <TextBlock Text="error_log_2024.txt" 
-                                             Foreground="{StaticResource titleColor2}"
-                                             FontSize="14"
-                                             FontFamily="Calibri"/>
-                                    <TextBlock Text="Size: 1.2 MB | Modified: Today 10:30"
-                                             Foreground="{StaticResource titleColor3}"
-                                             FontSize="11"
-                                             FontFamily="Calibri"/>
+                        <RadioButton Style="{StaticResource menuButton}"
+                                     Tag="{StaticResource color1}">
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="Gears" Style="{StaticResource menuButtonIcon}" />
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="system_log_2024.txt" Style="{StaticResource menuButtonTitleText}"/>
+                                    <TextBlock Text="Size: 850 KB | Modified: Yesterday" Style="{StaticResource menuButtonInfoText}"/>
                                 </StackPanel>
-                                <Ellipse Grid.Column="1" 
-                                         Width="8" 
-                                         Height="8" 
-                                         Fill="#FF4040"
-                                         Margin="10,0,5,0"
-                                         ToolTip="Contains errors"/>
-                            </Grid>
-                        </Button>
+                            </StackPanel>
+                        </RadioButton>
 
-                        <!-- Sample Button 2 -->
-                        <Button Height="45" Style="{StaticResource menuButton}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0" HorizontalAlignment="Left">
-                                    <TextBlock Text="system_log_2024.txt" 
-                                             Foreground="{StaticResource titleColor2}"
-                                             FontSize="14"
-                                             FontFamily="Calibri"/>
-                                    <TextBlock Text="Size: 850 KB | Modified: Yesterday"
-                                             Foreground="{StaticResource titleColor3}"
-                                             FontSize="11"
-                                             FontFamily="Calibri"/>
+                        <RadioButton Style="{StaticResource menuButton}"
+                                     Tag="{StaticResource color2}">
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="Gears" Style="{StaticResource menuButtonIcon}" />
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="error_log_2024.txt" Style="{StaticResource menuButtonTitleText}"/>
+                                    <TextBlock Text="Size: 1.2 MB | Modified: Today 10:30" Style="{StaticResource menuButtonInfoText}"/>
                                 </StackPanel>
-                                <Ellipse Grid.Column="1" 
-                                         Width="8" 
-                                         Height="8" 
-                                         Fill="#40FF40"
-                                         Margin="10,0,5,0"
-                                         ToolTip="No errors"/>
-                            </Grid>
-                        </Button>
+                            </StackPanel>
+                        </RadioButton>
+                        
                     </ListBox>
                 </StackPanel>
             </Border>
