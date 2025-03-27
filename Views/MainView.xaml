@@ -4,235 +4,205 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LogFileViewer"
-        mc:Ignorable="d"
+        mc:Ignorable="d"      
         WindowStyle="None"
-        Title="Log File Viewer" Height="800" Width="800"
-        WindowStartupLocation="CenterScreen"
         Background="Transparent"
         AllowsTransparency="True"
-        MouseDown="Window_MouseDown">
+        Title="Log File Viewer" Height="700" Width="1300"
+        WindowStartupLocation="CenterScreen">
 
-    <Border CornerRadius="12">
-        <Border.Background>
-            <ImageBrush ImageSource="/Images/Background.png" Stretch="None"/>
-        </Border.Background>
-        <Border CornerRadius="12"
-                BorderThickness="2"
-                Opacity="0.8">
-            <Border.BorderBrush>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="#462ad8" Offset="0"/>
-                    <GradientStop Color="#da34ae" Offset="0.75"/>
-                    <GradientStop Color="#8a16c1" Offset="1"/>
-                </LinearGradientBrush>
-            </Border.BorderBrush>
-            <Border.Background>
-                <LinearGradientBrush StartPoint="1,1" EndPoint="0,0">
-                    <GradientStop Color="#060531" Offset="0"/>
-                    <GradientStop Color="#1b1448" Offset="0.75"/>
-                </LinearGradientBrush>
-            </Border.Background>
+    <Window.Resources>
+        <!-- Colors -->
+        <Color x:Key="winBorderColor1">#462AD8</Color>
+        <Color x:Key="winBorderColor2">#DA34AE</Color>
+        <Color x:Key="winBorderColor3">#8A16C1</Color>
+        <Color x:Key="primaryBackColor1">#060531</Color>
+        <Color x:Key="primaryBackColor2">#1B1448</Color>
+        <Color x:Key="secondaryBackColor1">#1B1448</Color>
+        <Color x:Key="secondaryBackColor2">#060531</Color>
+        
+        <!-- Brushes -->
+        <SolidColorBrush x:Key="titleColor2" Color="#D0D0D0"/>
+        <SolidColorBrush x:Key="titleColor3" Color="#A0A0A0"/>
 
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="25"/>
-                        <ColumnDefinition Width="25"/>
-                        <ColumnDefinition Width="5"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="LogViewer"
-                           Foreground="DarkGray"
-                           FontSize="15"
-                           FontFamily="Calibri"
-                           Grid.Column="0"
-                           VerticalAlignment="Center"
-                           Margin="10,0,0,0"/>
-                    <Button x:Name="btn_Minimize"
-                        BorderThickness="0"
-                        Content="-"
-                        Foreground="White"
-                        FontSize="16"
-                        FontFamily="Calibri"
-                        Cursor="Hand"
-                        Grid.Column="1"
-                        Click="btn_Minimize_Click">
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Background" Value="#28aeed"/>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#278bef"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                        <Button.Template>
+        <!-- Button Style -->
+        <Style x:Key="menuButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource titleColor2}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="230"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="0,0,0,5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderThickness="4,0,0,0"
+                                BorderBrush="Transparent"
+                                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Margin="10,0,0,0"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#1F1F1F"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
                             <ControlTemplate TargetType="Button">
-                                <Border Width="18" Height="18"
-                                    CornerRadius="9"
-                                    Background="{TemplateBinding Background}">
-                                    <ContentPresenter VerticalAlignment="Center"
-                                                  HorizontalAlignment="Center"/>
+                                <Border Background="{TemplateBinding Background}"
+                                        BorderThickness="4,0,0,0"
+                                        BorderBrush="#DA34AE"
+                                        CornerRadius="5">
+                                    <ContentPresenter HorizontalAlignment="Left"
+                                                    VerticalAlignment="Center"
+                                                    Margin="10,0,0,0"/>
                                 </Border>
                             </ControlTemplate>
-                        </Button.Template>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
 
-                    </Button>
-                    <Button x:Name="btn_Close"
-                        BorderThickness="0"
-                        Content="X"
-                        Foreground="White"
-                        FontSize="12"
-                        FontFamily="Calibri"
-                        Cursor="Hand"
-                        Grid.Column="2"
-                        Click="btn_Close_Click">
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Background" Value="#da34ae"/>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#c62dae"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Border Width="18" Height="18"
-                                    CornerRadius="9"
-                                    Background="{TemplateBinding Background}">
-                                    <ContentPresenter VerticalAlignment="Center"
-                                                  HorizontalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Button.Template>
+    <Border CornerRadius="10"
+            BorderThickness="1">
+        <Border.BorderBrush>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="{StaticResource winBorderColor1}" Offset="0"/>
+                <GradientStop Color="{StaticResource winBorderColor2}" Offset="0.75"/>
+                <GradientStop Color="{StaticResource winBorderColor3}" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
 
-                    </Button>
-                </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <!--Navigation menu-->
+                <ColumnDefinition Width="250"/>
+                <!--Content Section-->
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
+            <!--Navigation Menu-->
+            <Border CornerRadius="10,0,0,10"
+                    Grid.Column="0">
 
-                    <Button x:Name="btn_OpenFolder"
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="{StaticResource secondaryBackColor1}" Offset="0"/>
+                        <GradientStop Color="{StaticResource secondaryBackColor2}" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+                <StackPanel>
+                    <!--Logo-->
+                    <StackPanel Orientation="Horizontal"
+                                Height="35"
+                                Margin="15,25,0,40">
+                        <Image Source="/Images/Logo.png" Height="30"/>
+
+                        <TextBlock Text="LogViewer"
+                                   Foreground="{StaticResource titleColor2}"
+                                   FontSize="20"
+                                   FontFamily="Calibri"
+                                   FontWeight="Medium"
+                                   VerticalAlignment="Center"
+                                   Margin="10,0,0,0"/>
+                    </StackPanel>
+
+                    <!--Listbox-->
+                    <ListBox x:Name="LogFileListBox" 
+                            Background="Transparent" 
                             BorderThickness="0"
-                            Content="Open Folder"
-                            Foreground="White"
-                            FontSize="15"
-                            FontFamily="Calibri"
-                            Cursor="Hand"
-                            Grid.Column="0"
-                            Click="btn_OpenFolder_Click"
-                            HorizontalAlignment="Left"
-                            Margin="5,0,5,0">
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Background" Value="#FF8C00"/>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#E67E00"/>
-                                    </Trigger>
-                                </Style.Triggers>
+                            Margin="5">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Margin" Value="0,0,0,5"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <ContentPresenter/>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
                             </Style>
-                        </Button.Style>
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Border Width="90" Height="20"
-                                        CornerRadius="4"
-                                        Background="{TemplateBinding Background}">
-                                    <ContentPresenter VerticalAlignment="Center"
-                                                    HorizontalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
+                        </ListBox.ItemContainerStyle>
 
-                    <Label Grid.Column="1"
-                           Content="testlabeltext"
-                           FontSize="15"
-                           FontFamily="Calibri"
-                           Foreground="White"
-                           Background="#FF8C00"
-                           HorizontalAlignment="Left"                           
-                           Margin="5,0,0,0">
-                        <Label.Template>
-                            <ControlTemplate TargetType="Label">
-                                <Border CornerRadius="4" Height="20" Padding="5,0,5,0"
-                                        Background="{TemplateBinding Background}">
-                                    <ContentPresenter VerticalAlignment="Center"
-                                                        HorizontalAlignment="Left"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Label.Template>
-                    </Label>
-                </Grid>
-
-                <Grid Grid.Row="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="220"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-
-                    <ListView x:Name="filesListView" 
-                                 SelectionMode="Single"                                                                   
-                                 Margin="2"
-                                 Background="#F0F0F0">
-
-                        <ListViewItem HorizontalContentAlignment="Stretch">
-                            <Border BorderBrush="LightGray" 
-                                    BorderThickness="1"                         
-                                    Padding="5"                        
-                                    HorizontalAlignment="Stretch"
-                                    Background="White">
-                                <StackPanel>
-                                    <TextBlock Text="example.log" FontWeight="Bold"/>
-                                    <TextBlock Text="2.5 MB"/>
-                                    <TextBlock Text="2024-03-24 15:30" Foreground="Gray"/>
+                        <!-- Sample Button 1 -->
+                        <Button Height="45" Style="{StaticResource menuButton}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" HorizontalAlignment="Left">
+                                    <TextBlock Text="error_log_2024.txt" 
+                                             Foreground="{StaticResource titleColor2}"
+                                             FontSize="14"
+                                             FontFamily="Calibri"/>
+                                    <TextBlock Text="Size: 1.2 MB | Modified: Today 10:30"
+                                             Foreground="{StaticResource titleColor3}"
+                                             FontSize="11"
+                                             FontFamily="Calibri"/>
                                 </StackPanel>
-                            </Border>
-                        </ListViewItem>
+                                <Ellipse Grid.Column="1" 
+                                         Width="8" 
+                                         Height="8" 
+                                         Fill="#FF4040"
+                                         Margin="10,0,5,0"
+                                         ToolTip="Contains errors"/>
+                            </Grid>
+                        </Button>
 
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Border BorderBrush="LightGray" 
-                                    BorderThickness="1"                              
-                                    Padding="5"                             
-                                    HorizontalAlignment="Stretch"
-                                    Background="White"> 
-                                    <StackPanel>
-                                        <TextBlock Text="{Binding FileName}" FontWeight="Bold"/>
-                                        <TextBlock Text="{Binding FileSize}"/>
-                                        <TextBlock Text="{Binding LastModified}" Foreground="Gray"/>
-                                    </StackPanel>
-                                </Border>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                            </Style>
-                        </ListView.ItemContainerStyle>
-                        <ListView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel/>
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                    </ListView>
+                        <!-- Sample Button 2 -->
+                        <Button Height="45" Style="{StaticResource menuButton}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" HorizontalAlignment="Left">
+                                    <TextBlock Text="system_log_2024.txt" 
+                                             Foreground="{StaticResource titleColor2}"
+                                             FontSize="14"
+                                             FontFamily="Calibri"/>
+                                    <TextBlock Text="Size: 850 KB | Modified: Yesterday"
+                                             Foreground="{StaticResource titleColor3}"
+                                             FontSize="11"
+                                             FontFamily="Calibri"/>
+                                </StackPanel>
+                                <Ellipse Grid.Column="1" 
+                                         Width="8" 
+                                         Height="8" 
+                                         Fill="#40FF40"
+                                         Margin="10,0,5,0"
+                                         ToolTip="No errors"/>
+                            </Grid>
+                        </Button>
+                    </ListBox>
+                </StackPanel>
+            </Border>
 
-                </Grid>
-            
-            </Grid>
+            <!--Content Section-->
+            <Border CornerRadius="0,10,10,0"
+                    Grid.Column="1">
 
-        </Border>
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="1,1" EndPoint="0,0">
+                        <GradientStop Color="{StaticResource primaryBackColor1}" Offset="0"/>
+                        <GradientStop Color="{StaticResource primaryBackColor2}" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+
+        </Grid>
+
     </Border>
+
+    
 
 </Window>
