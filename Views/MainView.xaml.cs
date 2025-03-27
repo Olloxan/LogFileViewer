@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Controls;
 using Microsoft.Win32;
 using Microsoft.Xaml.Behaviors.Media;
@@ -56,7 +57,7 @@ namespace LogFileViewer
 
        
 
-        private void OpenFolder_Click(object sender, RoutedEventArgs e)
+        private void btn_OpenFolder_Click(object sender, RoutedEventArgs e)
         {
             
         }
@@ -69,6 +70,14 @@ namespace LogFileViewer
         private void btn_Close_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
         }
     }
 }

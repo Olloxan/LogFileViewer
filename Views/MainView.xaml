@@ -9,7 +9,8 @@
         Title="Log File Viewer" Height="800" Width="800"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
-        AllowsTransparency="True">
+        AllowsTransparency="True"
+        MouseDown="Window_MouseDown">
 
     <Border CornerRadius="12">
         <Border.Background>
@@ -34,6 +35,7 @@
 
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
                     <RowDefinition />
                 </Grid.RowDefinitions>
@@ -114,62 +116,123 @@
 
                     </Button>
                 </Grid>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="btn_OpenFolder"
+                            BorderThickness="0"
+                            Content="Open Folder"
+                            Foreground="White"
+                            FontSize="15"
+                            FontFamily="Calibri"
+                            Cursor="Hand"
+                            Grid.Column="0"
+                            Click="btn_OpenFolder_Click"
+                            HorizontalAlignment="Left"
+                            Margin="5,0,5,0">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#FF8C00"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#E67E00"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Width="90" Height="20"
+                                        CornerRadius="4"
+                                        Background="{TemplateBinding Background}">
+                                    <ContentPresenter VerticalAlignment="Center"
+                                                    HorizontalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Label Grid.Column="1"
+                           Content="testlabeltext"
+                           FontSize="15"
+                           FontFamily="Calibri"
+                           Foreground="White"
+                           Background="#FF8C00"
+                           HorizontalAlignment="Left"                           
+                           Margin="5,0,0,0">
+                        <Label.Template>
+                            <ControlTemplate TargetType="Label">
+                                <Border CornerRadius="4" Height="20" Padding="5,0,5,0"
+                                        Background="{TemplateBinding Background}">
+                                    <ContentPresenter VerticalAlignment="Center"
+                                                        HorizontalAlignment="Left"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Label.Template>
+                    </Label>
+                </Grid>
+
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="220"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <ListView x:Name="filesListView" 
+                                 SelectionMode="Single"                                                                   
+                                 Margin="2"
+                                 Background="#F0F0F0">
+
+                        <ListViewItem HorizontalContentAlignment="Stretch">
+                            <Border BorderBrush="LightGray" 
+                                    BorderThickness="1"                         
+                                    Padding="5"                        
+                                    HorizontalAlignment="Stretch"
+                                    Background="White">
+                                <StackPanel>
+                                    <TextBlock Text="example.log" FontWeight="Bold"/>
+                                    <TextBlock Text="2.5 MB"/>
+                                    <TextBlock Text="2024-03-24 15:30" Foreground="Gray"/>
+                                </StackPanel>
+                            </Border>
+                        </ListViewItem>
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="LightGray" 
+                                    BorderThickness="1"                              
+                                    Padding="5"                             
+                                    HorizontalAlignment="Stretch"
+                                    Background="White"> 
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding FileName}" FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding FileSize}"/>
+                                        <TextBlock Text="{Binding LastModified}" Foreground="Gray"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                    </ListView>
+
+                </Grid>
+            
             </Grid>
 
         </Border>
     </Border>
-    <!--<DockPanel>
-        <Menu DockPanel.Dock="Top" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
-            <MenuItem Header="_File">
-                <MenuItem Header="_Open Folder" Click="OpenFolder_Click"/>
-            </MenuItem>
-        </Menu>
-        <ListView x:Name="filesListView" 
-                 SelectionMode="Single" 
-                 Width="200" 
-                 HorizontalAlignment="Left" 
-                 Margin="2"
-                 Background="#F0F0F0">
-            -->
-    <!--<ListViewItem HorizontalContentAlignment="Stretch">
-                <Border BorderBrush="LightGray" 
-                        BorderThickness="1"                         
-                        Padding="5"                        
-                        HorizontalAlignment="Stretch"
-                        Background="White">
-                    <StackPanel>
-                        <TextBlock Text="example.log" FontWeight="Bold"/>
-                        <TextBlock Text="2.5 MB"/>
-                        <TextBlock Text="2024-03-24 15:30" Foreground="Gray"/>
-                    </StackPanel>
-                </Border>
-            </ListViewItem>-->
-    <!--
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Border BorderBrush="LightGray" 
-                            BorderThickness="1"                              
-                            Padding="5"                             
-                            HorizontalAlignment="Stretch"
-                            Background="White">
-                        <StackPanel>
-                            <TextBlock Text="{Binding FileName}" FontWeight="Bold"/>
-                            <TextBlock Text="{Binding FileSize}"/>
-                            <TextBlock Text="{Binding LastModified}" Foreground="Gray"/>
-                        </StackPanel>
-                    </Border>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel/>
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-        </ListView>
-    </DockPanel>-->
+
 </Window>
