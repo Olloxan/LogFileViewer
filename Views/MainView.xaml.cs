@@ -51,7 +51,7 @@ namespace LogFileViewer
 
             // Set the ListView's ItemsSource
             
-            filesListView.ItemsSource = fileItems;
+            //filesListView.ItemsSource = fileItems;
         }
 
        
@@ -59,6 +59,16 @@ namespace LogFileViewer
         private void OpenFolder_Click(object sender, RoutedEventArgs e)
         {
             
+        }
+
+        private void btn_Minimize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void btn_Close_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }
