@@ -11,6 +11,7 @@
                 </ResourceDictionary>
                 <ResourceDictionary Source="/Styles/UIColors.xaml"/>
                 <ResourceDictionary Source="/Styles/ButtonStyles.xaml"/>
+                <ResourceDictionary Source="/Styles/ScrollbarStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <converters:EqualityConverter x:Key="EqualityConverter"/>

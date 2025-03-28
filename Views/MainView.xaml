@@ -41,11 +41,21 @@
                     </LinearGradientBrush>
                 </Border.Background>
 
-                <StackPanel>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <!-- Header / Logo -->
+                        <RowDefinition Height="Auto"/>
+                        <!-- Open Folder Button -->
+                        <RowDefinition Height="*"/>
+                        <!-- ListBox that fills remaining space -->                        
+                    </Grid.RowDefinitions>
+                    
                     <!--Logo-->
                     <StackPanel Orientation="Horizontal"
                                 Height="35"
-                                Margin="15,25,0,40">
+                                Margin="15,25,0,40"
+                                Grid.Row="0">
                         <Image Source="/Images/Logo.png" Height="30"/>
 
                         <TextBlock Text="LogViewer"
@@ -61,7 +71,8 @@
                     <Button x:Name="SelectFolder"
                             Style="{StaticResource clickButton}"
                             Tag="{StaticResource color8}"                                
-                            HorizontalAlignment="Stretch">
+                            HorizontalAlignment="Stretch"
+                            Grid.Row="1">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="FolderOpen" Style="{StaticResource clickButtonIcon}" />
                             <TextBlock Text="Open Folder" Style="{StaticResource clickButtonTitleText}"/>
@@ -69,6 +80,7 @@
                     </Button>
 
                     <TextBlock Grid.Column="1" 
+                               Grid.Row="1"
                                 Style="{StaticResource clickButtonInfoText}"
                                     Text="{Binding SelectedFolderPath}"
                                     Foreground="{StaticResource titleColor2}"
@@ -84,7 +96,10 @@
                              BorderThickness="0"
                              Margin="5"
                              ItemsSource="{Binding LogFiles}"
-                             SelectedItem="{Binding SelectedLogFile, Mode=TwoWay}">
+                             SelectedItem="{Binding SelectedLogFile, Mode=TwoWay}"
+                             Grid.Row="2"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        
                         <!--Disable ListboxItem Visuals-->
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
@@ -119,6 +134,10 @@
                             </Style>
                         </ListBox.ItemContainerStyle>
 
+                        <ListBox.Resources>
+                            <Style TargetType="ScrollBar" BasedOn="{StaticResource SlimScrollBar}"/>
+                        </ListBox.Resources>
+                        
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <RadioButton Style="{StaticResource menuButton}"
@@ -165,7 +184,7 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                </StackPanel>
+                </Grid>
             </Border>
 
             <!--Content Section-->
