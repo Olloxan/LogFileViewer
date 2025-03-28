@@ -57,15 +57,33 @@
                                    Margin="10,0,0,0"/>
                     </StackPanel>
 
-                    <!--Button TODO: change appearance to match Logviewer textblobk-->
-                    <Button x:Name="SelectFolder"
-                            Style="{StaticResource clickButton}"
-                            Tag="{StaticResource color8}">
-                        <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="Gears" Style="{StaticResource clickButtonIcon}" />
-                            <TextBlock Text="Settings" Style="{StaticResource clickButtonTitleText}"/>
-                        </StackPanel>
-                    </Button>
+                    <!--Button-->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button x:Name="SelectFolder"
+                                Style="{StaticResource clickButton}"
+                                Tag="{StaticResource color8}"
+                                Grid.Column="0">
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="FolderOpen" Style="{StaticResource clickButtonIcon}" />
+                                <TextBlock Text="Open" Style="{StaticResource clickButtonTitleText}"/>
+                            </StackPanel>
+                        </Button>
+
+                        <TextBlock Grid.Column="1" 
+                                   Style="{StaticResource clickButtonInfoText}"
+                                     Text="{Binding SelectedFolderPath}"
+                                     Foreground="{StaticResource titleColor2}"
+                                     FontSize="12"
+                                     FontFamily="Calibri"
+                                     VerticalAlignment="Center"
+                                     Margin="10,0,0,0"
+                                     TextTrimming="CharacterEllipsis"/>
+                    </Grid>
                     <!--Listbox-->
                     <ListBox x:Name="LogFileListBox" 
                             Background="Transparent" 
