@@ -1,7 +1,8 @@
 ﻿<Application x:Class="LogFileViewer.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:LogFileViewer">
+             xmlns:local="clr-namespace:LogFileViewer"
+             xmlns:converters="clr-namespace:LogFileViewer.Converters">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -11,8 +12,10 @@
                 <ResourceDictionary Source="/Styles/UIColors.xaml"/>
                 <ResourceDictionary Source="/Styles/ButtonStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
 
-        
+            <converters:EqualityConverter x:Key="EqualityConverter"/>
+            <converters:BoolToColorConverter x:Key="BoolToColorConverter"/>
+            <converters:BoolToTextConverter x:Key="BoolToTextConverter"/>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

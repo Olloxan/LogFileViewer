@@ -25,7 +25,7 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <!--Navigation menu-->
-                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="300"/>
                 <!--Content Section-->
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
@@ -57,73 +57,113 @@
                                    Margin="10,0,0,0"/>
                     </StackPanel>
 
-                    <!--Button-->
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                    <!--Button-->                                        
+                    <Button x:Name="SelectFolder"
+                            Style="{StaticResource clickButton}"
+                            Tag="{StaticResource color8}"                                
+                            HorizontalAlignment="Stretch">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="FolderOpen" Style="{StaticResource clickButtonIcon}" />
+                            <TextBlock Text="Open Folder" Style="{StaticResource clickButtonTitleText}"/>
+                        </StackPanel>
+                    </Button>
 
-                        <Button x:Name="SelectFolder"
-                                Style="{StaticResource clickButton}"
-                                Tag="{StaticResource color8}"
-                                Grid.Column="0">
-                            <StackPanel Orientation="Horizontal">
-                                <fa:IconImage Icon="FolderOpen" Style="{StaticResource clickButtonIcon}" />
-                                <TextBlock Text="Open" Style="{StaticResource clickButtonTitleText}"/>
-                            </StackPanel>
-                        </Button>
-
-                        <TextBlock Grid.Column="1" 
-                                   Style="{StaticResource clickButtonInfoText}"
-                                     Text="{Binding SelectedFolderPath}"
-                                     Foreground="{StaticResource titleColor2}"
-                                     FontSize="12"
-                                     FontFamily="Calibri"
-                                     VerticalAlignment="Center"
-                                     Margin="10,0,0,0"
-                                     TextTrimming="CharacterEllipsis"/>
-                    </Grid>
+                    <TextBlock Grid.Column="1" 
+                                Style="{StaticResource clickButtonInfoText}"
+                                    Text="{Binding SelectedFolderPath}"
+                                    Foreground="{StaticResource titleColor2}"
+                                    FontSize="12"
+                                    FontFamily="Calibri"
+                                    VerticalAlignment="Center"
+                                    Margin="10,0,0,0"
+                                    TextTrimming="CharacterEllipsis"/>
+                    
                     <!--Listbox-->
-                    <ListBox x:Name="LogFileListBox" 
-                            Background="Transparent" 
-                            BorderThickness="0"
-                            Margin="5">
+                    <ListBox x:Name="LogFiles" 
+                             Background="Transparent" 
+                             BorderThickness="0"
+                             Margin="5"
+                             ItemsSource="{Binding LogFiles}"
+                             SelectedItem="{Binding SelectedLogFile, Mode=TwoWay}">
+                        <!--Disable ListboxItem Visuals-->
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="Margin" Value="0,0,0,5"/>
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="ListBoxItem">
-                                            <ContentPresenter/>
+                                            <Border x:Name="border"
+                                                    Background="{TemplateBinding Background}"
+                                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                                    BorderThickness="0">
+                                                <ContentPresenter />
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <!-- Optional: add selected background if you want -->
+                                                <Trigger Property="IsSelected" Value="True">
+                                                    <Setter TargetName="border" Property="Background" Value="Transparent"/>
+                                                    <Setter TargetName="border" Property="BorderBrush" Value="Transparent"/>
+                                                </Trigger>
+                                                <Trigger Property="IsFocused" Value="True">
+                                                    <Setter TargetName="border" Property="BorderBrush" Value="Transparent"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>
+
                             </Style>
                         </ListBox.ItemContainerStyle>
 
-                        <RadioButton Style="{StaticResource menuButton}"
-                                     Tag="{StaticResource color1}">
-                            <StackPanel Orientation="Horizontal">
-                                <fa:IconImage Icon="Gears" Style="{StaticResource menuButtonIcon}" />
-                                <StackPanel Orientation="Vertical">
-                                    <TextBlock Text="system_log_2024.txt" Style="{StaticResource menuButtonTitleText}"/>
-                                    <TextBlock Text="Size: 850 KB | Modified: Yesterday" Style="{StaticResource menuButtonInfoText}"/>
-                                </StackPanel>
-                            </StackPanel>
-                        </RadioButton>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <RadioButton Style="{StaticResource menuButton}"
+                                           Tag="{StaticResource color1}"                                           
+                                           IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
+                                           Focusable="False">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50"/>
+                                            <ColumnDefinition Width="210"/>
+                                            <ColumnDefinition Width="30"/>
+                                        </Grid.ColumnDefinitions>
 
-                        <RadioButton Style="{StaticResource menuButton}"
-                                     Tag="{StaticResource color2}">
-                            <StackPanel Orientation="Horizontal">
-                                <fa:IconImage Icon="Gears" Style="{StaticResource menuButtonIcon}" />
-                                <StackPanel Orientation="Vertical">
-                                    <TextBlock Text="error_log_2024.txt" Style="{StaticResource menuButtonTitleText}"/>
-                                    <TextBlock Text="Size: 1.2 MB | Modified: Today 10:30" Style="{StaticResource menuButtonInfoText}"/>
-                                </StackPanel>
-                            </StackPanel>
-                        </RadioButton>
+                                        <fa:IconImage Grid.Column="0" 
+                                                     Icon="File" 
+                                                     Style="{StaticResource menuButtonIcon}"
+                                                     HorizontalAlignment="Left" />
 
+                                        <StackPanel Grid.Column="1" 
+                                                  Orientation="Vertical"
+                                                  HorizontalAlignment="Left">
+                                            <TextBlock Text="{Binding FileName}" 
+                                                     Style="{StaticResource menuButtonTitleText}"/>
+                                            <TextBlock Style="{StaticResource menuButtonInfoText}">
+                                                <Run Text="Size: "/>
+                                                <Run Text="{Binding FileSize}"/>
+                                                <Run Text=" | Modified: "/>
+                                                <Run Text="{Binding LastModified}"/>
+                                            </TextBlock>
+                                        </StackPanel>
+
+                                        <Ellipse Grid.Column="2" 
+                                                Width="8" Height="8" 
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Fill="{Binding HasErrors, 
+                                                       Converter={StaticResource BoolToColorConverter}, 
+                                                       ConverterParameter='#FF4040,#40FF40'}"
+                                                ToolTip="{Binding HasErrors, 
+                                                         Converter={StaticResource BoolToTextConverter}, 
+                                                         ConverterParameter='Contains errors,No errors'}"/>
+                                    </Grid>
+                                </RadioButton>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
                     </ListBox>
                 </StackPanel>
             </Border>
@@ -236,7 +276,5 @@
 
         </Grid>
     </Border>
-
     
-
 </Window>
