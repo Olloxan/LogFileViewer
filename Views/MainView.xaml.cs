@@ -6,6 +6,8 @@ using System.Windows.Input;
 using System.Windows.Controls;
 using Microsoft.Win32;
 using Microsoft.Xaml.Behaviors.Media;
+using System.Runtime.InteropServices;
+using System.Windows.Interop;
 
 namespace LogFileViewer
 {
@@ -26,7 +28,8 @@ namespace LogFileViewer
         public MainView()
         {
             InitializeComponent();
-            
+            MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
+
             // Initialize the collection
             fileItems = new ObservableCollection<FileItem>();
             
@@ -55,29 +58,35 @@ namespace LogFileViewer
             //filesListView.ItemsSource = fileItems;
         }
 
-       
-
-        private void btn_OpenFolder_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
+        [DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        
         private void btn_Minimize_Click(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
         }
 
+        private void btn_Maximize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Maximized;
+        }
+
         private void btn_Close_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }        
+
+        private void pnlControlBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            WindowInteropHelper helper = new WindowInteropHelper(this);
+            SendMessage(helper.Handle, 161, 2, 0);
         }
 
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        private void pnlControlBar_MouseEnter(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                DragMove();
-            }
+            MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
         }
+
+        
     }
 }
