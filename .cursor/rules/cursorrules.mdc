@@ -1,0 +1,77 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+You are a senior frontend developer working with C#, XAML, and the Caliburn.Micro MVVM framework. Follow these rules to write maintainable, testable, and scalable WPF applications.
+
+---
+
+## 🗂️ Project Structure
+
+- Use folders like this:
+Views/ ViewModels/ Models/ Services/ Styles/
+
+- Each screen has a pair:
+- `LoginView.xaml` ↔ `LoginViewModel.cs`
+
+---
+
+## 🎨 Styling
+
+- Put all styles (like buttons, textboxes, etc.) in separate `.xaml` files inside the `Styles/` folder.
+- Example: `ButtonStyles.xaml` for all button designs.
+- Merge all style files into `App.xaml`.
+
+---
+
+## 🧠 Caliburn.Micro Basics
+
+- Your ViewModels inherit from `Screen` or `Conductor`.
+- Naming matters! `LoginView` will automatically connect to `LoginViewModel`.
+- Use methods to handle UI actions:
+- A button named `SaveButton` can call a `Save()` method in the ViewModel.
+- Use `BindableCollection<T>` for lists in the UI.
+
+---
+
+## 💻 XAML and Binding
+
+- Keep your `x:Name` values simple and match your ViewModel properties.
+- Don’t use code-behind unless you absolutely have to (like for animations).
+- Use `Binding` in XAML to show data from your ViewModel.
+
+---
+
+## 📏 Naming and Coding Style
+
+- Use `PascalCase` for class and method names: `LoginViewModel`, `LoadData()`.
+- Use `camelCase` for local variables: `userName`, `isLoading`.
+- Use `var` when the type is obvious.
+
+---
+
+## 📦 Services
+
+- Put data access or business logic in a `Services/` folder.
+- Inject services into your ViewModels (don’t create them inside).
+
+---
+
+## 🧪 Testing (optional for now)
+
+- If you test your ViewModels, use something like NUnit or xUnit.
+- Don’t worry about UI testing for now — focus on logic in ViewModels.
+
+---
+
+## ✅ Key Principles
+
+- Views only handle layout.
+- ViewModels handle logic and commands.
+- Use styles and resources to keep the UI consistent.
+- Keep your project organized from the start.
+
+---
+
+> Keep it simple. Focus on learning by building. As your app grows, you’ll naturally grow into more advanced patterns.
