@@ -3,7 +3,7 @@ using System.IO;
 using System.Windows.Forms;
 using Caliburn.Micro;
 
-#nullable enable
+
 
 namespace LogFileViewer
 {
@@ -41,11 +41,10 @@ namespace LogFileViewer
                 {
                     _selectedLogFile = value;
                     NotifyOfPropertyChange(() => SelectedLogFile);
+                    
                     if (_selectedLogFile != null)
-                    {
-                        // TODO: Load and display the selected log file's contents
-
-                        foo();
+                    {                        
+                        getLogItemsFromFile();
                     }
                 }
             }
@@ -53,16 +52,14 @@ namespace LogFileViewer
 
         Task<ObservableCollection<LogItem>>? taskToWait;
 
-        private async void foo()
+        private async void getLogItemsFromFile()
         {
             try
             {
-                if (SelectedFolderPath == null || _selectedLogFile == null)
-                {
-                    return;
-                }
+                if (SelectedFolderPath == null || _selectedLogFile == null)                
+                    throw new Exception("Error in Path");
+                
                 taskToWait = FileLoader.GetLogItems(Path.Combine(SelectedFolderPath, _selectedLogFile.FileName));
-
                 LogItems = await taskToWait;
             }
             catch (Exception ex)
