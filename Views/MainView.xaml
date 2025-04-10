@@ -67,29 +67,29 @@
                                    Margin="10,0,0,0"/>
                     </StackPanel>
 
-                    <!--Button-->                                        
-                    <Button x:Name="SelectFolder"
-                            Style="{StaticResource clickButton}"
-                            Tag="{StaticResource color8}"                                
-                            HorizontalAlignment="Stretch"
-                            Grid.Row="1">
-                        <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="FolderOpen" Style="{StaticResource clickButtonIcon}" />
-                            <TextBlock Text="Open Folder" Style="{StaticResource clickButtonTitleText}"/>
-                        </StackPanel>
-                    </Button>
+                    <!--Button-->
+                    <StackPanel Grid.Row="1">
+                        
+                        <Button x:Name="SelectFolder"
+                                Style="{StaticResource clickButton}"
+                                Tag="{StaticResource color8}"                                
+                                HorizontalAlignment="Stretch"
+                                >
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="FolderOpen" Style="{StaticResource clickButtonIcon}" />
+                                <TextBlock Text="Open Folder" Style="{StaticResource clickButtonTitleText}"/>
+                            </StackPanel>
+                        </Button>
 
-                    <TextBlock Grid.Column="1" 
-                               Grid.Row="1"
-                                Style="{StaticResource clickButtonInfoText}"
+                        <TextBlock  Style="{StaticResource clickButtonInfoText}"
                                     Text="{Binding SelectedFolderPath}"
-                                    Foreground="{StaticResource titleColor2}"
+                                    Foreground="{StaticResource plainTextColor3}"
                                     FontSize="12"
                                     FontFamily="Calibri"
                                     VerticalAlignment="Center"
                                     Margin="10,0,0,0"
                                     TextTrimming="CharacterEllipsis"/>
-                    
+                    </StackPanel>
                     <!--Listbox-->
                     <ListBox x:Name="LogFiles" 
                              Background="Transparent" 
@@ -286,9 +286,44 @@
 
                     <!--Content section / Child Views-->
 
-                    <ContentControl Content=""
-                                    Grid.Row="2"
-                                    Margin="25"/>
+                    <ItemsControl Grid.Row="2" ItemsSource="{Binding LogItems}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel />
+                                <!-- Optional: gives tile layout -->
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Padding="10" Margin="6" CornerRadius="5" HorizontalAlignment="Stretch">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Background" Value="{StaticResource color6}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Type}" Value="Warning">
+                                                    <Setter Property="Background" Value="Orange"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Type}" Value="Info">
+                                                    <Setter Property="Background" Value="LightBlue"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Type}" Value="Error">
+                                                    <Setter Property="Background" Value="LightCoral"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Title}" FontWeight="Bold" FontSize="14"/>
+                                        <TextBlock Text="{Binding Type}" FontStyle="Italic" Margin="0,4,0,0"/>
+                                        <TextBlock Text="{Binding Message}" Foreground="Gray" FontSize="12" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+
+                    </ItemsControl>
                 </Grid>
             
             </Border>

@@ -1,11 +1,7 @@
-using Caliburn.Micro;
-using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Windows.Forms;
+using Caliburn.Micro;
 
 namespace LogFileViewer
 {
@@ -52,9 +48,21 @@ namespace LogFileViewer
             }
         }
 
+        private ObservableCollection<LogItem> _logItems;
+        public ObservableCollection<LogItem> LogItems
+        {
+            get => _logItems;
+            set
+            {
+                _logItems = value;
+                NotifyOfPropertyChange(() => LogItems);
+            }
+        }
+
         public MainViewModel()
         {
             LogFiles = new ObservableCollection<FileItem>();
+            SelectedFolderPath = "No Folder Selected";
             //LogFiles.Add(new FileItem
             //{
             //    FileName = "application.log",
@@ -63,7 +71,30 @@ namespace LogFileViewer
             //    FullPath = "Kn�llerup",
             //    HasErrors = false
             //});
-            LoadLogFiles("F:\\Logtest\\logs");
+            //LoadLogFiles("F:\\Logtest\\logs");
+            LogItems = new ObservableCollection<LogItem>();
+            //LogItems.Add(new LogItem
+            //{
+            //    Title = "Title",
+            //    Module = "Module",
+            //    Message = "Message"
+            //}); 
+            //LogItems.Add(new LogItem
+            //{
+            //    Title = "Title2",
+            //    Module = "Module",
+            //    Message = "Lorem ipsum dolor sit amet, consetetur sadipscing " +
+            //        "elitr, sed diam nonumy eirmod tempor invidunt ut labore " +
+            //        "et dolore magna aliquyam erat, sed diam voluptua. At vero " +
+            //        "eos et accusam et justo duo dolores et ea rebum. Stet " +
+            //        "clita kasd gubergren, no sea takimata sanctus est Lorem " +
+            //        "ipsum dolor sit amet. Lorem ipsum dolor sit amet, " +
+            //        "consetetur sadipscing elitr, sed diam nonumy eirmod tempor " +
+            //        "invidunt ut labore et dolore magna aliquyam erat, sed diam " +
+            //        "voluptua. At vero eos et accusam et justo duo dolores et " +
+            //        "ea rebum. Stet clita kasd gubergren, no sea takimata sanctus " +
+            //        "est Lorem ipsum dolor sit amet."
+            //});
         }
 
         public void SelectFolder()
@@ -106,7 +137,7 @@ namespace LogFileViewer
             catch (Exception ex)
             {
                 // TODO: Proper error handling
-                System.Windows.MessageBox.Show($"Error loading log files: {ex.Message}");
+                MessageBox.Show($"Error loading log files: {ex.Message}");
             }
         }
 
