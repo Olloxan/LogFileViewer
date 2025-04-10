@@ -11,7 +11,7 @@ namespace LogFileViewer
         /// <summary>
         /// LogFilename
         /// </summary>
-        public string Title { get; set; }
+        public string Time { get; set; }
 
         /// <summary>
         /// LogFilesize and Modification Date

@@ -3,12 +3,14 @@ using System.IO;
 using System.Windows.Forms;
 using Caliburn.Micro;
 
+#nullable enable
+
 namespace LogFileViewer
 {
-    public class MainViewModel : PropertyChangedBase, IMain
+    public class MainViewModel : PropertyChangedBase, IMain, IAsyncDisposable
     {
-        private string _selectedFolderPath;
-        public string SelectedFolderPath
+        private string? _selectedFolderPath;
+        public string? SelectedFolderPath
         {
             get => _selectedFolderPath;
             set
@@ -18,8 +20,8 @@ namespace LogFileViewer
             }
         }
 
-        private ObservableCollection<FileItem> _logFiles;
-        public ObservableCollection<FileItem> LogFiles
+        private ObservableCollection<FileItem>? _logFiles;
+        public ObservableCollection<FileItem>? LogFiles
         {
             get => _logFiles;
             set
@@ -29,8 +31,8 @@ namespace LogFileViewer
             }
         }
 
-        private FileItem _selectedLogFile;
-        public FileItem SelectedLogFile
+        private FileItem? _selectedLogFile;
+        public FileItem? SelectedLogFile
         {
             get => _selectedLogFile;
             set
@@ -42,14 +44,35 @@ namespace LogFileViewer
                     if (_selectedLogFile != null)
                     {
                         // TODO: Load and display the selected log file's contents
-                        System.Diagnostics.Debug.WriteLine($"Selected log file: {_selectedLogFile.FileName}");
+
+                        foo();
                     }
                 }
             }
         }
 
-        private ObservableCollection<LogItem> _logItems;
-        public ObservableCollection<LogItem> LogItems
+        Task<ObservableCollection<LogItem>>? taskToWait;
+
+        private async void foo()
+        {
+            try
+            {
+                if (SelectedFolderPath == null || _selectedLogFile == null)
+                {
+                    return;
+                }
+                taskToWait = FileLoader.GetLogItems(Path.Combine(SelectedFolderPath, _selectedLogFile.FileName));
+
+                LogItems = await taskToWait;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private ObservableCollection<LogItem>? _logItems;
+        public ObservableCollection<LogItem>? LogItems
         {
             get => _logItems;
             set
@@ -71,7 +94,7 @@ namespace LogFileViewer
             //    FullPath = "Kn�llerup",
             //    HasErrors = false
             //});
-            //LoadLogFiles("F:\\Logtest\\logs");
+            //LoadLogFiles("C:\\Source\\InteractiveDoc\\Logs");
             LogItems = new ObservableCollection<LogItem>();
             //LogItems.Add(new LogItem
             //{
@@ -170,6 +193,18 @@ namespace LogFileViewer
             // TODO: Implement your logic to determine if a log file contains errors
             // For now, we'll return false
             return false;
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            if (taskToWait != null)
+            {
+                try
+                {
+                    await taskToWait;
+                }
+                catch (Exception ex) { }
+            }
         }
     }
 } 
