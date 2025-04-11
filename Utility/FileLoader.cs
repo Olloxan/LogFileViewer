@@ -19,10 +19,16 @@ namespace LogFileViewer
                 AllowTrailingCommas = true
             };
             var collection = new ObservableCollection<LogItem>();
+
+            // check for Message or error and Deserialize into a Logmessage or 
+            // log error item
+            // There is a chatgpt chat for that
             foreach (string line in lines)
             {
                 string temp = line.Substring(0, line.Length - 1);
-                collection.Add(JsonSerializer.Deserialize<LogItem>(temp, options));
+                var knille = JsonSerializer.Deserialize<LogItem>(temp, options);
+                if (knille != null)
+                    collection.Add(knille);
             }
             
             return collection;

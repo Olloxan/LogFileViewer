@@ -1,30 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LogFileViewer
+﻿namespace LogFileViewer
 {
     public class LogItem
     {
         /// <summary>
         /// LogFilename
         /// </summary>
-        public string Time { get; set; }
+        public string? Time { get; set; } = string.Empty;
 
         /// <summary>
         /// LogFilesize and Modification Date
         /// </summary>
-        public string Module { get; set; }
+        public string? Module { get; set; } = string.Empty;
 
+    }
 
-        public string Message { get; set; }
+    public class MessageLogItem : LogItem
+    {
+       
+        public string? Message { get; set; } = string.Empty;    
+                
+    }
 
-        public string Error { get; set; }
+    public class ErrorLogItem : LogItem
+    {
+        public string? Error { get; set; } = string.Empty;
 
-        public string Exception { get; set; }
-
-        
+        public string? Exception { get; set; } = string.Empty;
     }
 }
