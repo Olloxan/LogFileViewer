@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Controls;
-using Microsoft.Win32;
-using Microsoft.Xaml.Behaviors.Media;
-using System.Runtime.InteropServices;
 using System.Windows.Interop;
 
 namespace LogFileViewer

@@ -1,0 +1,56 @@
+
+
+[*.cs]
+
+########################################################
+# General C# Code Style Settings
+########################################################
+
+# Use spaces instead of tabs
+indent_style = space
+indent_size = 4
+
+# End of line character
+end_of_line = crlf
+
+# Charset
+charset = utf-8
+
+# Trim trailing whitespace
+trim_trailing_whitespace = true
+
+# Insert final newline at end of file
+insert_final_newline = true
+
+
+
+#### warnings and errors
+
+# none – disables the warning
+# silent – doesn't show in the editor but still logs
+# suggestion – shows as a lightbulb suggestion
+# warning – shows as a warning
+# error – shows as an error
+
+# Parameter not used warning
+dotnet_diagnostic.IDE0060.severity = none 
+
+# Enable nullable reference types (like using '#nullable enable' in code)
+dotnet_enable_nullable_context = true
+
+# Treat all nullable-related warnings as errors
+#dotnet_diagnostic.CS8618.severity = error
+#dotnet_diagnostic.CS8602.severity = error
+#dotnet_diagnostic.CS8600.severity = error
+
+
+# Unused parameter 
+dotnet_diagnostic.IDE0060.severity = none
+# Declared but never used
+dotnet_diagnostic.CS0168.severity = warning
+# Assigned but never used
+dotnet_diagnostic.CS0219.severity = warning
+
+# Unnecassary Asignment
+dotnet_diagnostic.IDE0059.severity = none
+
